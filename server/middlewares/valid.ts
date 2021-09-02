@@ -7,43 +7,37 @@ export const validRegister = async (
 ) => {
   const { name, account, password } = req.body;
 
+  const errors = [];
+
   if (!name) {
-    return res.status(400).json({ msg: "Por gentileza digite um nome" });
+    errors.push("Por gentileza digite um nome");
   } else if (name.length > 30) {
-    return res
-      .status(400)
-      .json({ msg: "Seu nome ultrapassou o limite de 30 caracteres." });
+    errors.push("Seu nome ultrapassou o limite de 30 caracteres.");
   }
 
   if (!account) {
-    return res
-      .status(400)
-      .json({ msg: "Obrigatorio adicionar E-mail ou telefone para acesso." });
+    errors.push("Obrigatorio adicionar E-mail ou telefone para acesso.");
   } else if (!validPhone(account) && !validateEmail(account)) {
-    return res
-      .status(400)
-      .json({ msg: "Formato do E-mail ou número incorreto." });
+    errors.push("Formato do E-mail ou número incorreto.");
   }
 
   if (password.length < 6) {
-    return res
-      .status(400)
-      .json({ msg: "Senha não pode ser menor que 6 digitos" });
+    errors.push("Senha não pode ser menor que 6 digitos");
   } else if (password.length > 10) {
-    return res
-      .status(400)
-      .json({ msg: "Senha não pode ser maior que 10 digitos" });
+    errors.push("Senha não pode ser maior que 10 digitos");
   }
+
+  if (errors.length > 0) return res.status(400).json({ msg: errors });
 
   next();
 };
 
-function validPhone(phone: string) {
+export function validPhone(phone: string) {
   const re = /^[+]/g;
   return re.test(phone);
 }
 
-function validateEmail(email: string) {
+export function validateEmail(email: string) {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());

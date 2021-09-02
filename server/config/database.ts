@@ -6,12 +6,12 @@ mongoose.connect(
   `${URI}`,
   {
     useCreateIndex: true,
-    useNewUrlParser: true,
     useFindAndModify: false,
+    useNewUrlParser: true,
     useUnifiedTopology: true,
   },
   (err) => {
     if (err) throw err;
-    console.log("mongodb connected");
+    console.log("Mongodb connection");
   }
 );

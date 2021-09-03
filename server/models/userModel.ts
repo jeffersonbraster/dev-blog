@@ -17,8 +17,6 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "Obrigatorio adicionar senha para acesso."],
-      trim: true,
-      maxLength: [10, "Seu nome ultrapassou o limite de 10 caracteres."],
     },
     avatar: {
       type: String,

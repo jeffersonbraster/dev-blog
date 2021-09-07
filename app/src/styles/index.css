@@ -19,3 +19,6 @@ code {
 
 /* loading page */
 @import url("./loading.css");
+
+/* alert menssages */
+@import url("./alert.css");

@@ -4,7 +4,7 @@ import PageRender from "./PageRender";
 import Header from "./components/Global/Header";
 import Footer from "./components/Global/Footer";
 
-import Alert from "./components/alert/Alert";
+import { Alert } from "./components/alert/Alert";
 
 const App = () => {
   return (

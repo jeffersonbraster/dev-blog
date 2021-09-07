@@ -65,24 +65,17 @@ const authController = {
       if (!newUser)
         return res.status(400).json({ msg: "Invalid authentication." });
 
-      const user = new Users(newUser);
+      const user = await Users.findOne({ account: newUser.account });
 
-      await user.save();
+      if (user) return res.status(400).json({ msg: "Usuário já existe." });
+
+      const createUser = new Users(newUser);
+
+      await createUser.save();
 
       res.json({ msg: "Conta foi validada com sucesso, aproveite ;)" });
     } catch (error: any) {
-      let errorMsg: any;
-
-      if (error.code === 11000) {
-        errorMsg = Object.keys(error.keyValue)[0] + " already exists.";
-      } else {
-        let name = Object.keys(error.errors)[0];
-        errorMsg = error.errors[`${name}`].message;
-
-        return res.status(500).json({ msg: errorMsg });
-      }
-
-      return res.status(500).json({ msg: errorMsg });
+      return res.status(500).json({ msg: error.message });
     }
   },
 
@@ -96,7 +89,7 @@ const authController = {
 
       //if user exist
       loginUser(user, password, res);
-    } catch (error) {
+    } catch (error: any) {
       return res.status(500).json({ msg: error });
     }
   },
@@ -105,7 +98,7 @@ const authController = {
       res.clearCookie("blogdev-refreshtoken", { path: `/api/refresh_token` });
 
       return res.json({ msg: "Usuário deslogado" });
-    } catch (error) {
+    } catch (error: any) {
       return res.status(500).json({ msg: error });
     }
   },

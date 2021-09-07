@@ -26,12 +26,12 @@ const Login = () => {
         </small>
 
         <p>
-          Ainda não possui uma conta?
+          {`Ainda não possui uma conta? `}
           <Link
             to={`/register`}
             style={{ color: "crimson", textDecoration: "none" }}
           >
-            {` Cadastre aqui`}
+            Cadastre aqui
           </Link>
         </p>
       </div>

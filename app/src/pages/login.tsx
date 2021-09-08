@@ -1,10 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import LoginPass from "../components/auth/LoginPass";
 import LoginSms from "../components/auth/LoginSms";
-import { Link } from "react-router-dom";
+
+import { RootStore } from "../utils/TypeScript";
 
 const Login = () => {
   const [sms, setSms] = React.useState(false);
+  const history = useHistory();
+
+  const { auth } = useSelector((state: RootStore) => state);
+
+  React.useEffect(() => {
+    if (auth.access_token) history.push("/");
+  }, [history, auth.access_token]);
 
   return (
     <div className="auth_page">

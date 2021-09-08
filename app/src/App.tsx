@@ -1,4 +1,6 @@
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import PageRender from "./PageRender";
 import Header from "./components/Global/Header";
@@ -6,7 +8,14 @@ import Footer from "./components/Global/Footer";
 
 import { Alert } from "./components/alert/Alert";
 
+import { refresh_token } from "./redux/actions/authAction";
+
 const App = () => {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(refresh_token());
+  }, [dispatch]);
+
   return (
     <div className="container">
       <Router>

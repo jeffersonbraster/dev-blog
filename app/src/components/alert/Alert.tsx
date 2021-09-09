@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { RootReducer } from "../../utils/TypeScript";
+import { RootStore } from "../../utils/TypeScript";
 import Loading from "./Loading";
 import Toast from "./Toast";
 
 export const Alert = () => {
-  const { alert } = useSelector((state: RootReducer) => state);
+  const { alert } = useSelector((state: RootStore) => state);
   return (
     <div>
       {alert.loading && <Loading />}

@@ -10,7 +10,16 @@ import sendEmail from "../config/sendMail";
 import { validateEmail, validPhone } from "../middlewares/valid";
 import { sendSms } from "../config/sendSms";
 import jwt from "jsonwebtoken";
-import { IDecodedToken, IUser } from "../config/interface";
+import {
+  IDecodedToken,
+  IUser,
+  IGooglePayload,
+  IUserParams,
+} from "../config/interface";
+
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(`${process.env.AIL_CLIENT_ID}`);
 
 const authController = {
   register: async (req: Request, res: Response) => {
@@ -126,6 +135,43 @@ const authController = {
       return res.status(500).json({ msg: error });
     }
   },
+  googleLogin: async (req: Request, res: Response) => {
+    try {
+      const { id_token } = req.body;
+
+      const verify = await client.verifyIdToken({
+        idToken: id_token,
+        audience: `${process.env.MAIN_CLIENT_ID}`,
+      });
+
+      const { email, email_verified, name, picture } = <IGooglePayload>(
+        verify.getPayload()
+      );
+
+      if (!email_verified)
+        return res.status(500).json({ msg: "verificação de E-mail falhou." });
+
+      const password = email + "your google secret password";
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      const user = await Users.findOne({ account: email });
+
+      if (user) {
+        loginUser(user, password, res);
+      } else {
+        const user = {
+          name,
+          account: email,
+          password: passwordHash,
+          avatar: picture,
+          type: "login",
+        };
+        registerUser(user, res);
+      }
+    } catch (error) {
+      return res.status(500).json({ msg: error });
+    }
+  },
 };
 
 const loginUser = async (user: IUser, password: string, res: Response) => {
@@ -148,6 +194,26 @@ const loginUser = async (user: IUser, password: string, res: Response) => {
     msg: "Sucesso ao logar",
     access_token,
     user: { ...user._doc, password: "" },
+  });
+};
+
+const registerUser = async (user: IUserParams, res: Response) => {
+  const newUser = new Users(user);
+  await newUser.save();
+
+  const access_token = generateAccessToken({ id: newUser._id });
+  const refresh_token = generateRefreshToken({ id: newUser._id });
+
+  res.cookie("refreshtoken", refresh_token, {
+    httpOnly: true,
+    path: `/api/refresh_token`,
+    maxAge: 30 * 24 * 60 * 60 * 1000, //30days
+  });
+
+  res.json({
+    msg: "Sucesso ao logar",
+    access_token,
+    user: { ...newUser._doc, password: "" },
   });
 };
 

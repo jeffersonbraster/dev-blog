@@ -32,6 +32,10 @@ export interface IUser extends IUserLogin {
   updatedAt: string;
 }
 
+export interface IUserInfo extends IUserRegister {
+  avatar: string | File;
+}
+
 export interface IAlert {
   loading?: boolean;
   success?: string | string[];

@@ -30,3 +30,6 @@ code {
 
 /* alert menssages */
 @import url("./alert.css");
+
+/* profile page */
+@import url("./profile.css");

@@ -53,7 +53,7 @@ const Menu = () => {
 
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <Link className="dropdown-item" to="/profile">
+              <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>
                 Profile
               </Link>
             </li>
@@ -61,12 +61,13 @@ const Menu = () => {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <span
+              <Link
+                to="/"
                 className="dropdown-item"
                 onClick={() => dispatch(logout())}
               >
                 Sair
-              </span>
+              </Link>
             </li>
           </ul>
         </li>

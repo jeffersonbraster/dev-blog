@@ -2,13 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import LoginPass from "../components/auth/LoginPass";
-import LoginSms from "../components/auth/LoginSms";
 import LoginSocial from "../components/auth/SocialLogin";
 
 import { RootStore } from "../utils/TypeScript";
 
 const Login = () => {
-  const [sms, setSms] = React.useState(false);
   const history = useHistory();
 
   const { auth } = useSelector((state: RootStore) => state);
@@ -24,21 +22,17 @@ const Login = () => {
 
         <LoginSocial />
 
-        {sms ? <LoginSms /> : <LoginPass />}
+        <LoginPass />
 
         <small className="row my-2 text-primary" style={{ cursor: "pointer" }}>
-          <span className="col-6">
+          <span className="text-center">
             <Link to="/forgot_password" className="col-6">
               Esqueceu sua senha?
             </Link>
           </span>
-
-          <span className="col-6 text-end" onClick={() => setSms(!sms)}>
-            {sms ? "Entrar com Senha" : "Entrar com SMS"}
-          </span>
         </small>
 
-        <p>
+        <p className="text-center">
           {`Ainda não possui uma conta? `}
           <Link
             to={`/register`}

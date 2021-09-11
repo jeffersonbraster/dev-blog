@@ -17,18 +17,23 @@ export const validRegister = (userRegister: IUserRegister) => {
     errors.push("Formato do E-mail ou número incorreto.");
   }
 
-  if (password.length < 6) {
-    errors.push("Senha não pode ser menor que 6 digitos");
-  } else if (password.length > 10) {
-    errors.push("Senha não pode ser maior que 10 digitos");
-  } else if (password !== cf_password) {
-    errors.push("Senha e confirmar senha estão diferentes");
-  }
+  const msg = checkPassword(password, cf_password);
+  if (msg) errors.push(msg);
 
   return {
     errMsg: errors,
     errLength: errors.length,
   };
+};
+
+export const checkPassword = (password: string, cf_password: string) => {
+  if (password.length < 6) {
+    return "Senha não pode ser menor que 6 digitos";
+  } else if (password.length > 10) {
+    return "Senha não pode ser maior que 10 digitos";
+  } else if (password !== cf_password) {
+    return "Senha e confirmar senha estão diferentes";
+  }
 };
 
 export function validPhone(phone: string) {

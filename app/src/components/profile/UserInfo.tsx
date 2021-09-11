@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../redux/actions/profile";
+import { updateUser, resetPassword } from "../../redux/actions/profileAction";
 
 import {
   RootStore,
@@ -46,9 +46,12 @@ const UserInfo = () => {
   const handleSubmit = (e: FormSubmit) => {
     e.preventDefault();
     if (avatar || name) dispatch(updateUser(avatar as File, name, auth));
+
+    if (password && auth.access_token)
+      dispatch(resetPassword(password, cf_password, auth.access_token));
   };
 
-  const { name, account, avatar, password, cf_password } = user;
+  const { name, avatar, password, cf_password } = user;
 
   if (!auth.user) return <NotFound />;
 
@@ -98,43 +101,47 @@ const UserInfo = () => {
         />
       </div>
 
-      <div className="form-group my-3">
-        <label htmlFor="password">Password</label>
+      {auth.user.type === "register" && (
+        <>
+          <div className="form-group my-3">
+            <label htmlFor="password">Password</label>
 
-        <div className="pass">
-          <input
-            type={typePass ? "text" : "password"}
-            className="form-control"
-            id="password"
-            name="password"
-            value={password}
-            onChange={handleChangeInput}
-          />
+            <div className="pass">
+              <input
+                type={typePass ? "text" : "password"}
+                className="form-control"
+                id="password"
+                name="password"
+                value={password}
+                onChange={handleChangeInput}
+              />
 
-          <small onClick={() => setTypePass(!typePass)}>
-            {typePass ? "Hide" : "Show"}
-          </small>
-        </div>
-      </div>
+              <small onClick={() => setTypePass(!typePass)}>
+                {typePass ? "Hide" : "Show"}
+              </small>
+            </div>
+          </div>
 
-      <div className="form-group my-3">
-        <label htmlFor="cf_password">Confirm Password</label>
+          <div className="form-group my-3">
+            <label htmlFor="cf_password">Confirm Password</label>
 
-        <div className="pass">
-          <input
-            type={typeCfPass ? "text" : "password"}
-            className="form-control"
-            id="cf_password"
-            name="cf_password"
-            value={cf_password}
-            onChange={handleChangeInput}
-          />
+            <div className="pass">
+              <input
+                type={typeCfPass ? "text" : "password"}
+                className="form-control"
+                id="cf_password"
+                name="cf_password"
+                value={cf_password}
+                onChange={handleChangeInput}
+              />
 
-          <small onClick={() => setTypeCfPass(!typeCfPass)}>
-            {typeCfPass ? "Hide" : "Show"}
-          </small>
-        </div>
-      </div>
+              <small onClick={() => setTypeCfPass(!typeCfPass)}>
+                {typeCfPass ? "Hide" : "Show"}
+              </small>
+            </div>
+          </div>
+        </>
+      )}
 
       <button className="btn btn-dark w-100" type="submit">
         Alterar

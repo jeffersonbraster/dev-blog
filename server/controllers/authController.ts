@@ -164,7 +164,7 @@ const authController = {
           account: email,
           password: passwordHash,
           avatar: picture,
-          type: "login",
+          type: "google",
         };
         registerUser(user, res);
       }
@@ -177,8 +177,13 @@ const authController = {
 const loginUser = async (user: IUser, password: string, res: Response) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
-  if (!isMatch)
-    return res.status(400).json({ msg: "Conta ou senha incorreta." });
+  if (!isMatch) {
+    let msgError =
+      user.type === "register"
+        ? "Senha incorreta"
+        : `Senha incorreta. Essa conta faz login com Google `;
+    return res.status(400).json({ msg: msgError });
+  }
 
   const access_token = generateAccessToken({ id: user._id });
 

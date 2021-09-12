@@ -18,6 +18,7 @@ app.use(cookieParser());
 //routes
 app.use("/api", routes.authRouter);
 app.use("/api", routes.userRouter);
+app.use("/api", routes.categoryRoute);
 
 //database
 import "./config/database";

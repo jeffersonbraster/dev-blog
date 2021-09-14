@@ -52,11 +52,12 @@ const categoryController = {
     if (req.user.role !== "admin")
       return res.status(400).json({ msg: "Sem permissão." });
     try {
-      const category = await Categories.findOneAndUpdate(
+      const name = req.body.name.toLowerCase();
+      await Categories.findOneAndUpdate(
         {
           _id: req.params.id,
         },
-        { name: req.body.name }
+        { name }
       );
 
       res.json({ msg: "Categoria atualizado!" });

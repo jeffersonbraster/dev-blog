@@ -9,11 +9,14 @@ import Footer from "./components/Global/Footer";
 import { Alert } from "./components/alert/Alert";
 
 import { refresh_token } from "./redux/actions/authAction";
+import { getCategories } from "./redux/actions/categoryAction";
 
 const App = () => {
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch(refresh_token());
+    dispatch(getCategories());
   }, [dispatch]);
 
   return (

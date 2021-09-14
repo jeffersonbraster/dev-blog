@@ -33,3 +33,6 @@ code {
 
 /* profile page */
 @import url("./profile.css");
+
+/* category page */
+@import url("./category.css");

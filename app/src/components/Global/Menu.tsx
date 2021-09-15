@@ -52,11 +52,7 @@ const Menu = () => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src={auth.user.avatar}
-              alt={auth.user.name}
-              className="avatar"
-            />
+            <img src={auth.user.avatar} alt="avatar" className="avatar" />
           </span>
 
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -65,16 +61,18 @@ const Menu = () => {
                 Profile
               </Link>
             </li>
+
             <li>
               <hr className="dropdown-divider" />
             </li>
+
             <li>
               <Link
-                to="/"
                 className="dropdown-item"
+                to="/"
                 onClick={() => dispatch(logout())}
               >
-                Sair
+                Logout
               </Link>
             </li>
           </ul>

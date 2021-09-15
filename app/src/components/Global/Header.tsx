@@ -19,7 +19,7 @@ const Header = () => {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse d-grid gap-2" id="navbarNav">
+      <div className="collapse navbar-collapse" id="navbarNav">
         <Search />
         <div>
           <Menu />

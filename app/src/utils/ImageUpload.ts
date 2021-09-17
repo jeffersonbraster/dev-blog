@@ -1,9 +1,12 @@
 export const checkImage = (file: File) => {
+  const types = ["image/png", "image/jpeg"];
   let err = "";
 
   if (!file) return (err = "File não existe.");
 
   if (file.size > 1024 * 1024) err = "Permitido imagens até 1mb";
+
+  if (!types.includes(file.type)) err = "A imagem aceita tipos png e jpeg.";
 
   return err;
 };

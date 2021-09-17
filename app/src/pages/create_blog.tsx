@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CardHoriz from "../components/cards/CardHoriz";
 import CreateForm from "../components/cards/CreateForm";
+import Quill from "../components/editor/Quill";
 import NotFound from "../components/Global/NotFound";
 import { RootStore, IBlog } from "../utils/TypeScript";
 
@@ -17,6 +18,7 @@ const Create_blog = () => {
   };
 
   const [blog, setBlog] = React.useState<IBlog>(initState);
+  const [body, setBody] = React.useState("");
 
   const { auth, categories } = useSelector((state: RootStore) => state);
 
@@ -37,6 +39,10 @@ const Create_blog = () => {
           <CardHoriz blog={blog} />
         </div>
       </div>
+
+      <Quill setBody={setBody} />
+
+      <button className="btn btn-dark mt-3 d-block mx-auto">Criar post</button>
     </div>
   );
 };

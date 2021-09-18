@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { ALERT, IAlertType } from "../types/alertType";
 import { IBlog } from "../../utils/TypeScript";
+import { postAPI } from "../../utils/FetchData";
 import { imageUpload } from "../../utils/ImageUpload";
 
 export const createBlog =
@@ -15,6 +16,11 @@ export const createBlog =
         url = blog.thumbnail;
       }
       const newBlog = { ...blog, thumbnail: url };
+
+      const res = await postAPI("blog", newBlog, token);
+
+      console.log(res);
+
       dispatch({ type: ALERT, payload: { loading: false } });
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });

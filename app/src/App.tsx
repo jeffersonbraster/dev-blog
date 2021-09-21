@@ -10,11 +10,13 @@ import { Alert } from "./components/alert/Alert";
 
 import { refresh_token } from "./redux/actions/authAction";
 import { getCategories } from "./redux/actions/categoryAction";
+import { getHomeBlogs } from "./redux/actions/blogAction";
 
 const App = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    dispatch(getHomeBlogs());
     dispatch(refresh_token());
     dispatch(getCategories());
   }, [dispatch]);

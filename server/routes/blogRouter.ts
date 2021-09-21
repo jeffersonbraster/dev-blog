@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.post("/blog", auth, blogController.createBlog);
 
+router.get("/home/blogs", blogController.getHomeBlogs);
+
 export default router;

@@ -3,7 +3,12 @@ import { ALERT, IAlertType } from "../types/alertType";
 import { IBlog } from "../../utils/TypeScript";
 import { postAPI, getAPI } from "../../utils/FetchData";
 import { imageUpload } from "../../utils/ImageUpload";
-import { GET_HOME_BLOGS, IGetHomeBlogsType } from "../types/blogType";
+import {
+  GET_HOME_BLOGS,
+  IGetHomeBlogsType,
+  IGetBlogsCategoryType,
+  GET_BLOGS_BY_CATEGORY_ID,
+} from "../types/blogType";
 
 export const createBlog =
   (blog: IBlog, token: string) => async (dispatch: Dispatch<IAlertType>) => {
@@ -38,6 +43,25 @@ export const getHomeBlogs =
       dispatch({
         type: GET_HOME_BLOGS,
         payload: res.data,
+      });
+
+      dispatch({ type: ALERT, payload: { loading: false } });
+    } catch (err: any) {
+      dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });
+    }
+  };
+
+export const getBlogsByCategoryId =
+  (id: string) =>
+  async (dispatch: Dispatch<IAlertType | IGetBlogsCategoryType>) => {
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+
+      const res = await getAPI(`blogs/${id}`);
+
+      dispatch({
+        type: GET_BLOGS_BY_CATEGORY_ID,
+        payload: { ...res.data, id },
       });
 
       dispatch({ type: ALERT, payload: { loading: false } });

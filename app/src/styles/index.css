@@ -39,3 +39,6 @@ code {
 
 /* index page */
 @import url("./home.css");
+
+/* blog_category page */
+@import url("./blog_category.css");

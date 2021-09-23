@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { IReqAuth } from "../config/interface";
 import Users from "../models/userModel";
 import bcrypt from "bcrypt";
@@ -42,6 +42,15 @@ const userController = {
         }
       );
       res.json({ mgs: "Reset da senha feita com sucesso!" });
+    } catch (error: any) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
+  getUser: async (req: Request, res: Response) => {
+    try {
+      const user = await Users.findById(req.params.id).select("-password");
+
+      res.json(user);
     } catch (error: any) {
       return res.status(500).json({ msg: error.message });
     }

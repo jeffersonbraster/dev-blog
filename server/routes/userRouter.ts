@@ -8,4 +8,6 @@ router.patch("/user", auth, userController.updateUser);
 
 router.patch("/reset_password", auth, userController.resetPassword);
 
+router.get("/user/:id", userController.getUser);
+
 export default router;

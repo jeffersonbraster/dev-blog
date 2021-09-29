@@ -36,7 +36,7 @@ const Home = () => {
               className="text-right d-block mt-2 mb-3"
               to={`/blogs/${homeBlog.name}`}
             >
-              Leia mais &ht;
+              Leia mais &gt;&gt;
             </Link>
           )}
         </div>

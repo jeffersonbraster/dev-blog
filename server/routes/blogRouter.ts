@@ -12,4 +12,6 @@ router.get("/blogs/category/:id", blogController.getHomeBlogsByCategory);
 
 router.get("/blogs/user/:id", blogController.getHomeBlogsByUser);
 
+router.get("/blog/:id", blogController.getBlog);
+
 export default router;

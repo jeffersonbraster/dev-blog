@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser, resetPassword } from "../../redux/actions/profileAction";
+import { updateUser, resetPassword } from "../../redux/actions/userAction";
 
 import {
   RootStore,

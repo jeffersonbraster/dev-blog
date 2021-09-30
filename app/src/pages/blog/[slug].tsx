@@ -38,6 +38,8 @@ const DetailBlog = () => {
       {error && showErrMsg(error)}
 
       {blog && <DisplayBlog blog={blog} />}
+
+      <h2>Comentários:</h2>
     </div>
   );
 };

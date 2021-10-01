@@ -42,3 +42,6 @@ code {
 
 /* blog_category page */
 @import url("./blog_category.css");
+
+/* comments */
+@import url("./comments.css");

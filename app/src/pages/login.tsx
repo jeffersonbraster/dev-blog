@@ -12,7 +12,10 @@ const Login = () => {
   const { auth } = useSelector((state: RootStore) => state);
 
   React.useEffect(() => {
-    if (auth.access_token) history.push("/");
+    if (auth.access_token) {
+      let url = history.location.search.replace("?", "/");
+      history.push(url);
+    }
   }, [history, auth.access_token]);
 
   return (
@@ -35,7 +38,7 @@ const Login = () => {
         <p className="text-center">
           {`Ainda não possui uma conta? `}
           <Link
-            to={`/register`}
+            to={`/register${history.location.search}`}
             style={{ color: "crimson", textDecoration: "none" }}
           >
             Cadastre aqui
